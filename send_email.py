@@ -1,5 +1,6 @@
 import smtplib, ssl
 import time
+import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -7,9 +8,9 @@ from email.mime.text import MIMEText
 class Emailing(object):
 
     SMTP_CONFIG = {
-        'server': 'smtp.aol.com',
-        'username': 'pmanager25@aol.com',
-        'password': 'nbfkgtcfdytlsief',
+        'server': 'smtp.yourprovider.com',
+        'username': os.getenv('username'),
+        'password': os.getenv('app password'),
         'port': 465
     }
     CONTEXT = ssl.create_default_context()
@@ -30,7 +31,7 @@ class Emailing(object):
         msg['T0'] = reciever
         msg['Subject'] = 'reset'
 
-        body = f"<h1>please {name} use this {message} for your master. duration is 15 minutes </h1>"
+        body = f"<h1>your {name} and custom {message} in here </h1>"
         msg.attach(MIMEText(body, 'html'))
         self.connection.sendmail(sender, reciever, msg.as_string())
         print(
